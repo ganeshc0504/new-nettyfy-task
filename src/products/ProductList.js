@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
 const ProductList = () => {
@@ -16,10 +16,15 @@ const ProductList = () => {
     
     const rows = [];
     
+    const navigate = useNavigate()
     const products = useSelector(selectProducts);
     Array.isArray(products) && products.map((prod) => rows.push(prod));
     
     const [more,setMore]= React.useState(5)
+
+    const fetchOne = (id)=>{
+      navigate(`/${id}`)
+    }
 
     const loadMore = ()=>{
         setMore((prev)=>prev+5)
@@ -45,20 +50,22 @@ const ProductList = () => {
             {rows.slice(0, more).map((row) => (
               <TableRow
                 key={row.id}
+                onClick={()=>fetchOne(row.id)}
+                style={{cursor:"pointer"}}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                <Link to={`/${row.id}`} style={{textDecoration:"none"}}> {row.id}</Link>
+                 {row.id}
                 </TableCell>
                 <TableCell align="right">
-                <Link to={`/${row.id}`} style={{textDecoration:"none"}}><img src={row.thumbnail} style={{width:"50px",height:"50px"}} /></Link>
+                <img src={row.thumbnail} style={{width:"50px",height:"50px"}} />
                 </TableCell>
-                <TableCell align="right"><Link to={`/${row.id}`} style={{textDecoration:"none"}}>{row.category}</Link></TableCell>
-                <TableCell align="right"><Link to={`/${row.id}`} style={{textDecoration:"none"}}>{row.price}</Link></TableCell>
-                <TableCell align="right"><Link to={`/${row.id}`} style={{textDecoration:"none"}}>{row.discountPercentage}</Link></TableCell>
-                <TableCell align="right"><Link to={`/${row.id}`} style={{textDecoration:"none"}}>{row.stock}</Link></TableCell>
-                <TableCell align="right"><Link to={`/${row.id}`} style={{textDecoration:"none"}}>{row.Brand}</Link></TableCell>
-                <TableCell align="right"><Link to={`/${row.id}`} style={{textDecoration:"none"}}>{row.rating}</Link></TableCell>
+                <TableCell align="right">{row.category}</TableCell>
+                <TableCell align="right">{row.price}</TableCell>
+                <TableCell align="right">{row.discountPercentage}</TableCell>
+                <TableCell align="right">{row.stock}</TableCell>
+                <TableCell align="right">{row.Brand}</TableCell>
+                <TableCell align="right">{row.rating}</TableCell>
               </TableRow>
             ))}
           </TableBody>
