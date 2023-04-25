@@ -1,10 +1,11 @@
 import React from 'react';
-import Main from './frontend/Main';
+import Carousal from './carousal/Carousal';
+
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      <Carousal />
     </div>
   );
 }
